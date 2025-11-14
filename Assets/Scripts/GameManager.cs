@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     bool isGameFinished = false;
     bool isGameWon = false;
 
+    public int points = 0;
+    public int redKeys = 0;
+    public int greenKeys = 0;
+    public int goldKeys = 0;
+
     void Start()
     {
         if (instance == null)
@@ -91,5 +96,37 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckPause();
+    }
+
+    public void AddPoints(int pointsToAdd)
+    {
+        points += pointsToAdd;
+    }
+
+    public void AddTime(int timeToAdd)
+    {
+        timeToEnd += timeToAdd;
+    }
+
+    public void FreezeTime(int freezeTime)
+    {
+        CancelInvoke("Stopper");
+        InvokeRepeating("Stopper", freezeTime, 1);
+    }
+
+    public void AddKey(KeyColor keyColor)
+    {
+        switch (keyColor)
+        {
+            case KeyColor.Gold:
+                goldKeys++;
+                break;
+            case KeyColor.Green:
+                greenKeys++;
+                break;
+            case KeyColor.Red:
+                redKeys++;
+                break;
+        }
     }
 }
